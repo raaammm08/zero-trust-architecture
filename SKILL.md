@@ -149,7 +149,9 @@ Use templates from `templates/` for consistent outputs:
 | `templates/architecture/design-doc.md` | Architecture design document |
 | `templates/architecture/migration-plan.md` | Phased migration plan |
 | `templates/policies/opa-rego-template.rego` | OPA/Rego policy boilerplate |
-| `templates/policies/cedar-template.cedar` | AWS Cedar policy boilerplate |
+| `templates/policies/cedar-template.cedar` | AWS Cedar policy boilerplate (JIT database access) |
+| `templates/policies/cedar-schema.cedarschema` | Schema the Cedar template validates against |
+| `templates/policies/tests/cedar-tests.json` | Authorization test cases with expected ALLOW/DENY |
 | `templates/assessment/gap-analysis.md` | Gap analysis report |
 | `templates/assessment/maturity-scorecard.xlsx` | Maturity scoring spreadsheet |
 | `templates/threat-model/threat-model.md` | Threat model document |
@@ -171,7 +173,7 @@ Use scripts from `scripts/` for deterministic tasks:
 
 ---
 
-Setup: `pip install -r requirements.txt` (PyYAML, needed by `score-maturity.py` and `map-compliance.py`). `validate-rego.py` needs OPA 1.x on PATH (`brew install opa`). `validate-cedar.py` needs the `cedar` CLI.
+Setup: `pip install -r requirements.txt` (PyYAML, needed by `score-maturity.py` and `map-compliance.py`). `validate-rego.py` needs OPA 1.x on PATH (`brew install opa`). `validate-cedar.py` needs the Cedar CLI (`cargo install cedar-policy-cli`).
 
 Rego must use OPA v1 syntax: `allow if { ... }`, `deny contains msg if { ... }`, `default allow := false`. Templates in `templates/policies/` are v1 and pass `opa check`.
 

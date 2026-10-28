@@ -1,0 +1,290 @@
+[
+  {
+    "uid": {
+      "type": "ZeroTrust::User",
+      "id": "alice"
+    },
+    "parents": [],
+    "attrs": {
+      "role": "engineer",
+      "groups": [
+        "on-call"
+      ],
+      "mfaVerified": true,
+      "mfaMethod": "fido2",
+      "mfaTime": 1793447400,
+      "onCallStart": 1793444400,
+      "onCallEnd": 1793451600,
+      "riskScore": 20,
+      "denyList": [],
+      "device": {
+        "__entity": {
+          "type": "ZeroTrust::Device",
+          "id": "laptop-ok"
+        }
+      }
+    }
+  },
+  {
+    "uid": {
+      "type": "ZeroTrust::User",
+      "id": "bob"
+    },
+    "parents": [],
+    "attrs": {
+      "role": "engineer",
+      "groups": [
+        "on-call"
+      ],
+      "mfaVerified": true,
+      "mfaMethod": "fido2",
+      "mfaTime": 1793447400,
+      "onCallStart": 1793444400,
+      "onCallEnd": 1793451600,
+      "riskScore": 20,
+      "denyList": [],
+      "device": {
+        "__entity": {
+          "type": "ZeroTrust::Device",
+          "id": "laptop-revoked"
+        }
+      }
+    }
+  },
+  {
+    "uid": {
+      "type": "ZeroTrust::User",
+      "id": "carol"
+    },
+    "parents": [],
+    "attrs": {
+      "role": "analyst",
+      "groups": [
+        "on-call"
+      ],
+      "mfaVerified": true,
+      "mfaMethod": "fido2",
+      "mfaTime": 1793447400,
+      "onCallStart": 1793444400,
+      "onCallEnd": 1793451600,
+      "riskScore": 20,
+      "denyList": [],
+      "device": {
+        "__entity": {
+          "type": "ZeroTrust::Device",
+          "id": "laptop-ok"
+        }
+      }
+    }
+  },
+  {
+    "uid": {
+      "type": "ZeroTrust::User",
+      "id": "dave"
+    },
+    "parents": [],
+    "attrs": {
+      "role": "engineer",
+      "groups": [
+        "on-call"
+      ],
+      "mfaVerified": true,
+      "mfaMethod": "sms",
+      "mfaTime": 1793447400,
+      "onCallStart": 1793444400,
+      "onCallEnd": 1793451600,
+      "riskScore": 20,
+      "denyList": [],
+      "device": {
+        "__entity": {
+          "type": "ZeroTrust::Device",
+          "id": "laptop-ok"
+        }
+      }
+    }
+  },
+  {
+    "uid": {
+      "type": "ZeroTrust::User",
+      "id": "erin"
+    },
+    "parents": [],
+    "attrs": {
+      "role": "engineer",
+      "groups": [
+        "on-call"
+      ],
+      "mfaVerified": true,
+      "mfaMethod": "fido2",
+      "mfaTime": 1793440800,
+      "onCallStart": 1793444400,
+      "onCallEnd": 1793451600,
+      "riskScore": 20,
+      "denyList": [],
+      "device": {
+        "__entity": {
+          "type": "ZeroTrust::Device",
+          "id": "laptop-ok"
+        }
+      }
+    }
+  },
+  {
+    "uid": {
+      "type": "ZeroTrust::User",
+      "id": "frank"
+    },
+    "parents": [],
+    "attrs": {
+      "role": "engineer",
+      "groups": [],
+      "mfaVerified": true,
+      "mfaMethod": "fido2",
+      "mfaTime": 1793447400,
+      "onCallStart": 1793444400,
+      "onCallEnd": 1793451600,
+      "riskScore": 20,
+      "denyList": [],
+      "device": {
+        "__entity": {
+          "type": "ZeroTrust::Device",
+          "id": "laptop-ok"
+        }
+      }
+    }
+  },
+  {
+    "uid": {
+      "type": "ZeroTrust::User",
+      "id": "grace"
+    },
+    "parents": [],
+    "attrs": {
+      "role": "engineer",
+      "groups": [
+        "on-call"
+      ],
+      "mfaVerified": true,
+      "mfaMethod": "fido2",
+      "mfaTime": 1793447400,
+      "onCallStart": 1793444400,
+      "onCallEnd": 1793451600,
+      "riskScore": 20,
+      "denyList": [],
+      "device": {
+        "__entity": {
+          "type": "ZeroTrust::Device",
+          "id": "laptop-unmanaged"
+        }
+      }
+    }
+  },
+  {
+    "uid": {
+      "type": "ZeroTrust::User",
+      "id": "heidi"
+    },
+    "parents": [],
+    "attrs": {
+      "role": "engineer",
+      "groups": [
+        "on-call"
+      ],
+      "mfaVerified": true,
+      "mfaMethod": "fido2",
+      "mfaTime": 1793447400,
+      "onCallStart": 1793444400,
+      "onCallEnd": 1793451600,
+      "riskScore": 75,
+      "denyList": [],
+      "device": {
+        "__entity": {
+          "type": "ZeroTrust::Device",
+          "id": "laptop-ok"
+        }
+      }
+    }
+  },
+  {
+    "uid": {
+      "type": "ZeroTrust::User",
+      "id": "ivan"
+    },
+    "parents": [],
+    "attrs": {
+      "role": "engineer",
+      "groups": [
+        "on-call"
+      ],
+      "mfaVerified": true,
+      "mfaMethod": "fido2",
+      "mfaTime": 1793447400,
+      "onCallStart": 1793444400,
+      "onCallEnd": 1793451600,
+      "riskScore": 20,
+      "denyList": [
+        "prod-db-1"
+      ],
+      "device": {
+        "__entity": {
+          "type": "ZeroTrust::Device",
+          "id": "laptop-ok"
+        }
+      }
+    }
+  },
+  {
+    "uid": {
+      "type": "ZeroTrust::Device",
+      "id": "laptop-ok"
+    },
+    "parents": [],
+    "attrs": {
+      "managed": true,
+      "encrypted": true,
+      "edrRunning": true,
+      "postureScore": 90,
+      "revoked": false
+    }
+  },
+  {
+    "uid": {
+      "type": "ZeroTrust::Device",
+      "id": "laptop-revoked"
+    },
+    "parents": [],
+    "attrs": {
+      "managed": true,
+      "encrypted": true,
+      "edrRunning": true,
+      "postureScore": 90,
+      "revoked": true
+    }
+  },
+  {
+    "uid": {
+      "type": "ZeroTrust::Device",
+      "id": "laptop-unmanaged"
+    },
+    "parents": [],
+    "attrs": {
+      "managed": false,
+      "encrypted": true,
+      "edrRunning": true,
+      "postureScore": 90,
+      "revoked": false
+    }
+  },
+  {
+    "uid": {
+      "type": "ZeroTrust::Database",
+      "id": "prod-db-1"
+    },
+    "parents": [],
+    "attrs": {
+      "name": "prod-db-1",
+      "environment": "production",
+      "classification": "RESTRICTED"
+    }
+  }
+]

@@ -1,0 +1,174 @@
+{
+  "entities": "entities.json",
+  "cases": [
+    {
+      "name": "on-call engineer, compliant device",
+      "principal": "ZeroTrust::User::\"alice\"",
+      "action": "ZeroTrust::Action::\"connect\"",
+      "resource": "ZeroTrust::Database::\"prod-db-1\"",
+      "context": {
+        "now": 1793448000,
+        "network": "corporate",
+        "country": "US",
+        "compromisedCredentials": false
+      },
+      "expect": "ALLOW"
+    },
+    {
+      "name": "off-call engineer",
+      "principal": "ZeroTrust::User::\"alice\"",
+      "action": "ZeroTrust::Action::\"connect\"",
+      "resource": "ZeroTrust::Database::\"prod-db-1\"",
+      "context": {
+        "now": 1793455200,
+        "network": "corporate",
+        "country": "US",
+        "compromisedCredentials": false
+      },
+      "expect": "DENY"
+    },
+    {
+      "name": "non-engineer",
+      "principal": "ZeroTrust::User::\"carol\"",
+      "action": "ZeroTrust::Action::\"connect\"",
+      "resource": "ZeroTrust::Database::\"prod-db-1\"",
+      "context": {
+        "now": 1793448000,
+        "network": "corporate",
+        "country": "US",
+        "compromisedCredentials": false
+      },
+      "expect": "DENY"
+    },
+    {
+      "name": "revoked device",
+      "principal": "ZeroTrust::User::\"bob\"",
+      "action": "ZeroTrust::Action::\"connect\"",
+      "resource": "ZeroTrust::Database::\"prod-db-1\"",
+      "context": {
+        "now": 1793448000,
+        "network": "corporate",
+        "country": "US",
+        "compromisedCredentials": false
+      },
+      "expect": "DENY"
+    },
+    {
+      "name": "unmanaged device",
+      "principal": "ZeroTrust::User::\"grace\"",
+      "action": "ZeroTrust::Action::\"connect\"",
+      "resource": "ZeroTrust::Database::\"prod-db-1\"",
+      "context": {
+        "now": 1793448000,
+        "network": "corporate",
+        "country": "US",
+        "compromisedCredentials": false
+      },
+      "expect": "DENY"
+    },
+    {
+      "name": "SMS MFA (not phishing-resistant)",
+      "principal": "ZeroTrust::User::\"dave\"",
+      "action": "ZeroTrust::Action::\"connect\"",
+      "resource": "ZeroTrust::Database::\"prod-db-1\"",
+      "context": {
+        "now": 1793448000,
+        "network": "corporate",
+        "country": "US",
+        "compromisedCredentials": false
+      },
+      "expect": "DENY"
+    },
+    {
+      "name": "stale MFA (over one hour)",
+      "principal": "ZeroTrust::User::\"erin\"",
+      "action": "ZeroTrust::Action::\"connect\"",
+      "resource": "ZeroTrust::Database::\"prod-db-1\"",
+      "context": {
+        "now": 1793448000,
+        "network": "corporate",
+        "country": "US",
+        "compromisedCredentials": false
+      },
+      "expect": "DENY"
+    },
+    {
+      "name": "not in on-call group",
+      "principal": "ZeroTrust::User::\"frank\"",
+      "action": "ZeroTrust::Action::\"connect\"",
+      "resource": "ZeroTrust::Database::\"prod-db-1\"",
+      "context": {
+        "now": 1793448000,
+        "network": "corporate",
+        "country": "US",
+        "compromisedCredentials": false
+      },
+      "expect": "DENY"
+    },
+    {
+      "name": "high user risk score",
+      "principal": "ZeroTrust::User::\"heidi\"",
+      "action": "ZeroTrust::Action::\"connect\"",
+      "resource": "ZeroTrust::Database::\"prod-db-1\"",
+      "context": {
+        "now": 1793448000,
+        "network": "corporate",
+        "country": "US",
+        "compromisedCredentials": false
+      },
+      "expect": "DENY"
+    },
+    {
+      "name": "resource on user deny list",
+      "principal": "ZeroTrust::User::\"ivan\"",
+      "action": "ZeroTrust::Action::\"connect\"",
+      "resource": "ZeroTrust::Database::\"prod-db-1\"",
+      "context": {
+        "now": 1793448000,
+        "network": "corporate",
+        "country": "US",
+        "compromisedCredentials": false
+      },
+      "expect": "DENY"
+    },
+    {
+      "name": "compromised credentials in context",
+      "principal": "ZeroTrust::User::\"alice\"",
+      "action": "ZeroTrust::Action::\"connect\"",
+      "resource": "ZeroTrust::Database::\"prod-db-1\"",
+      "context": {
+        "now": 1793448000,
+        "network": "corporate",
+        "country": "US",
+        "compromisedCredentials": true
+      },
+      "expect": "DENY"
+    },
+    {
+      "name": "untrusted network and country",
+      "principal": "ZeroTrust::User::\"alice\"",
+      "action": "ZeroTrust::Action::\"connect\"",
+      "resource": "ZeroTrust::Database::\"prod-db-1\"",
+      "context": {
+        "now": 1793448000,
+        "network": "public",
+        "country": "XX",
+        "compromisedCredentials": false
+      },
+      "expect": "DENY"
+    },
+    {
+      "name": "approved country without corporate network",
+      "principal": "ZeroTrust::User::\"alice\"",
+      "action": "ZeroTrust::Action::\"connect\"",
+      "resource": "ZeroTrust::Database::\"prod-db-1\"",
+      "context": {
+        "now": 1793448000,
+        "network": "public",
+        "country": "GB",
+        "compromisedCredentials": false
+      },
+      "expect": "ALLOW"
+    }
+  ]
+}

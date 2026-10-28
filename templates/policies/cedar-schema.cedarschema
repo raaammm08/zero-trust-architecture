@@ -1,0 +1,46 @@
+// =============================================================================
+// Cedar schema for the Zero Trust access template (cedar-template.cedar).
+// Entity attributes used by the policies must be declared here.
+// Validate with: cedar validate --schema cedar-schema.cedarschema --policies cedar-template.cedar
+// =============================================================================
+
+namespace ZeroTrust {
+
+  entity Device = {
+    managed: Bool,
+    encrypted: Bool,
+    edrRunning: Bool,
+    postureScore: Long,
+    revoked: Bool,
+  };
+
+  entity User = {
+    role: String,
+    groups: Set<String>,
+    mfaVerified: Bool,
+    mfaMethod: String,
+    mfaTime: Long,
+    onCallStart: Long,
+    onCallEnd: Long,
+    riskScore: Long,
+    denyList: Set<String>,
+    device: Device,
+  };
+
+  entity Database = {
+    name: String,
+    environment: String,
+    classification: String,
+  };
+
+  action connect appliesTo {
+    principal: [User],
+    resource: [Database],
+    context: {
+      now: Long,
+      network: String,
+      country: String,
+      compromisedCredentials: Bool,
+    },
+  };
+}
