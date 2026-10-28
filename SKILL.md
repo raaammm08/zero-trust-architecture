@@ -7,6 +7,8 @@ description: Comprehensive Zero Trust Architecture skill for designing, implemen
 
 This skill provides end-to-end Zero Trust Architecture capabilities: architecture design, policy authoring, implementation guidance, assessment/audit, threat modeling, and compliance mapping — all aligned with NIST SP 800-207 and CISA Zero Trust Maturity Model.
 
+**Paths:** every `references/`, `templates/`, `scripts/`, and `examples/` path in this file is relative to this skill's directory, `~/.claude/skills/zero-trust-architecture/`. Run scripts with that full path, for example `python3 ~/.claude/skills/zero-trust-architecture/scripts/score-maturity.py <assessment.yaml>`, and write outputs to the user's project, not into the skill directory.
+
 ## Core Principles (NIST 800-207)
 
 All outputs must reflect these seven tenets:
