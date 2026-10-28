@@ -425,7 +425,11 @@ def main():
     args = parser.parse_args()
 
     scorer = MaturityScorer()
-    results = scorer.run_assessment(Path(args.assessment_file))
+    try:
+        results = scorer.run_assessment(Path(args.assessment_file))
+    except ValueError as e:
+        # Bad stage names are user input errors, so report them without a traceback
+        raise SystemExit(f"Error: {e}")
 
     if args.output:
         scorer.export_report(results, Path(args.output), args.format)
