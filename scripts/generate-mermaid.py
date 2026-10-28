@@ -12,6 +12,10 @@ from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, asdict
 from enum import Enum
 
+def _label(text) -> str:
+    """Quote a Mermaid node label; embedded double quotes become the #quot; entity."""
+    return '"' + str(text).replace('"', '#quot;') + '"'
+
 class ZoneType(Enum):
     INTERNET = "internet"
     EDGE = "edge"
@@ -130,17 +134,17 @@ class MermaidGenerator:
                     node_id = comp.id.replace("-", "_").replace(".", "_")
                     # Use different shapes for different types
                     if comp.type in ["gateway", "proxy", "pep"]:
-                        lines.append(f"        {node_id}[[{comp.name}]]")
+                        lines.append(f"        {node_id}[[{_label(comp.name)}]]")
                     elif comp.type in ["database", "store"]:
-                        lines.append(f"        {node_id}[({comp.name})]")
+                        lines.append(f"        {node_id}[({_label(comp.name)})]")
                     elif comp.type in ["identity", "idp", "pam"]:
-                        lines.append(f"        {node_id}(( {comp.name} ))")
+                        lines.append(f"        {node_id}(({_label(comp.name)}))")
                     else:
-                        lines.append(f"        {node_id}[{comp.name}]")
+                        lines.append(f"        {node_id}[{_label(comp.name)}]")
                     
                     if show_details and comp.description:
-                        lines.append(f"        {node_id} -.->|{comp.description}| {node_id}_desc")
-                        lines.append(f"        {node_id}_desc[/ {comp.description} /]")
+                        lines.append(f"        {node_id} -.->|{_label(comp.description)}| {node_id}_desc")
+                        lines.append(f"        {node_id}_desc[/{_label(comp.description)}/]")
             
             lines.append("    end")
             lines.append("")
@@ -248,12 +252,12 @@ class MermaidGenerator:
         
         zones_list = list(self.zones.values())
         for i, zone in enumerate(zones_list):
-            lines.append(f"    {zone.id}[{zone.name}]")
+            lines.append(f"    {zone.id}[{_label(zone.name)}]")
             if zone.trust_assumptions:
-                lines.append(f"    {zone.id}_assume[{zone.trust_assumptions}]")
+                lines.append(f"    {zone.id}_assume[{_label(zone.trust_assumptions)}]")
                 lines.append(f"    {zone.id} --> {zone.id}_assume")
             if zone.boundary_controls:
-                lines.append(f"    {zone.id}_control[{zone.boundary_controls}]")
+                lines.append(f"    {zone.id}_control[{_label(zone.boundary_controls)}]")
                 lines.append(f"    {zone.id} --> {zone.id}_control")
         
         # Add cross-zone relationships
