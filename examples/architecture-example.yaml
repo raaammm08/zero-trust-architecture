@@ -1,0 +1,267 @@
+zones:
+  - id: internet
+    name: Internet / Untrusted
+    type: internet
+    components: [user, attacker]
+    trust_assumptions: "Zero trust - all traffic untrusted"
+    boundary_controls: "ZTNA, DNS filtering, threat intel"
+
+  - id: edge
+    name: Edge / ZTNA
+    type: edge
+    components: [ztna, dns_security, waf]
+    trust_assumptions: "Verify explicitly before forwarding"
+    boundary_controls: "mTLS, device posture, policy enforcement"
+
+  - id: identity
+    name: Identity Fabric
+    type: identity
+    components: [idp, pam, wid]
+    trust_assumptions: "High trust, continuously monitored"
+    boundary_controls: "FIDO2 MFA, conditional access, JIT, audit"
+
+  - id: device
+    name: Device Trust
+    type: device
+    components: [mdm, edr, cert_mgmt]
+    trust_assumptions: "Managed = trusted, posture continuously verified"
+    boundary_controls: "Compliance policies, certificates, auto-remediation"
+
+  - id: network
+    name: Network Segmentation
+    type: network
+    components: [microseg, dns, sdwan]
+    trust_assumptions: "No implicit trust, identity-based segmentation"
+    boundary_controls: "Micro-segmentation, mTLS, deny-by-default"
+
+  - id: platform
+    name: Platform / Workloads
+    type: platform
+    components: [k8s, mesh, gitops, vault]
+    trust_assumptions: "Workload identity via SPIFFE, policy-as-code"
+    boundary_controls: "Service mesh mTLS, admission control, GitOps"
+
+  - id: application
+    name: Applications
+    type: application
+    components: [api_gateway, microservices, saas]
+    trust_assumptions: "Least privilege, per-session authorization"
+    boundary_controls: "API gateway AuthZ, fine-grained policies"
+
+  - id: data
+    name: Data Protection
+    type: data
+    components: [database, object_store, dlp, catalog]
+    trust_assumptions: "Data-centric security, classification-driven"
+    boundary_controls: "Encryption, DLP, IRM, classification, RLS"
+
+  - id: visibility
+    name: Visibility & Analytics
+    type: visibility
+    components: [siem, ueba, soar, threat_intel]
+    trust_assumptions: "Continuous monitoring, automated response"
+    boundary_controls: "UEBA, SOAR playbooks, threat intel integration"
+
+components:
+  - id: user
+    name: User
+    zone: internet
+    type: user
+    description: "End user accessing resources"
+    connections: [ztna]
+
+  - id: attacker
+    name: Attacker
+    zone: internet
+    type: threat
+    description: "External threat actor"
+    connections: [ztna, dns_security]
+
+  - id: ztna
+    name: ZTNA Gateway
+    zone: edge
+    type: gateway
+    description: "Cloudflare Access / Zscaler ZPA / Entra Private Access"
+    connections: [idp, device, pe]
+
+  - id: dns_security
+    name: DNS Security
+    zone: edge
+    type: dns
+    description: "Cloudflare Gateway DNS / Cisco Umbrella"
+    connections: [threat_intel]
+
+  - id: waf
+    name: WAF
+    zone: edge
+    type: waf
+    description: "Cloudflare WAF / AWS WAF"
+    connections: [api_gateway]
+
+  - id: idp
+    name: Identity Provider
+    zone: identity
+    type: identity
+    description: "Okta / Entra ID / Google Workspace"
+    connections: [pam, pe, mesh]
+
+  - id: pam
+    name: Privileged Access Mgmt
+    zone: identity
+    type: pam
+    description: "CyberArk / BeyondTrust / Cloud PAM"
+    connections: [idp, vault, mesh]
+
+  - id: wid
+    name: Workload Identity
+    zone: identity
+    type: wid
+    description: "SPIRE / AWS IAM Roles Anywhere / GCP WIF"
+    connections: [mesh, vault]
+
+  - id: mdm
+    name: MDM/UEM
+    zone: device
+    type: mdm
+    description: "Jamf / Intune / VMware Workspace ONE"
+    connections: [edr, cert_mgmt, pe]
+
+  - id: edr
+    name: EDR/XDR
+    zone: device
+    type: edr
+    description: "CrowdStrike / SentinelOne / Defender"
+    connections: [mdm, pe, siem]
+
+  - id: cert_mgmt
+    name: Certificate Management
+    zone: device
+    type: cert
+    description: "Venafi / Smallstep / Cloud CA"
+    connections: [mdm, mesh]
+
+  - id: microseg
+    name: Micro-segmentation
+    zone: network
+    type: microseg
+    description: "Istio AuthZ / Cilium / Calico"
+    connections: [mesh, network_policies]
+
+  - id: dns
+    name: Internal DNS
+    zone: network
+    type: dns
+    description: "CoreDNS / Route53 / Cloud DNS"
+    connections: [mesh, k8s]
+
+  - id: sdwan
+    name: SD-WAN
+    zone: network
+    type: sdwan
+    description: "Cloudflare Magic WAN / Aviatrix"
+    connections: [k8s, onprem]
+
+  - id: k8s
+    name: Kubernetes (EKS/GKE/AKS)
+    zone: platform
+    type: k8s
+    description: "Managed Kubernetes clusters"
+    connections: [mesh, gitops, vault, api_gateway]
+
+  - id: mesh
+    name: Service Mesh
+    zone: platform
+    type: mesh
+    description: "Istio / Cilium / Linkerd (mTLS STRICT)"
+    connections: [k8s, microservices, wid, microseg]
+
+  - id: gitops
+    name: GitOps (ArgoCD/Flux)
+    zone: platform
+    type: gitops
+    description: "GitOps continuous delivery"
+    connections: [k8s, vault, policy_repo]
+
+  - id: vault
+    name: Secrets Management
+    zone: platform
+    type: vault
+    description: "HashiCorp Vault / AWS Secrets Manager / GCP Secret Manager"
+    connections: [wid, pam, mesh, microservices]
+
+  - id: api_gateway
+    name: API Gateway
+    zone: application
+    type: gateway
+    description: "Kong / Apigee / AWS API GW / Cloudflare"
+    connections: [waf, mesh, microservices, saas]
+
+  - id: microservices
+    name: Microservices
+    zone: application
+    type: service
+    description: "Business logic services (50+)"
+    connections: [mesh, database, object_store, saas]
+
+  - id: saas
+    name: SaaS Applications
+    zone: application
+    type: saas
+    description: "GitHub, Slack, Atlassian, M365, Salesforce"
+    connections: [casb, api_gateway]
+
+  - id: database
+    name: Databases (RDS/Cloud SQL)
+    zone: data
+    type: database
+    description: "PostgreSQL, MySQL with RLS, dynamic creds"
+    connections: [microservices, dlp, vault]
+
+  - id: object_store
+    name: Object Storage (S3/GCS)
+    zone: data
+    type: store
+    description: "Encrypted buckets, versioning, access logging"
+    connections: [microservices, dlp, catalog]
+
+  - id: dlp
+    name: DLP / IRM
+    zone: data
+    type: dlp
+    description: "Cloudflare DLP / Netskope / Microsoft Purview"
+    connections: [database, object_store, siem]
+
+  - id: catalog
+    name: Data Catalog
+    zone: data
+    type: catalog
+    description: "DataHub / Amundsen / AWS Glue"
+    connections: [database, object_store, dlp]
+
+  - id: siem
+    name: SIEM / Data Lake
+    zone: visibility
+    type: siem
+    description: "Splunk / Elastic / Datadog / Security Lake"
+    connections: [edr, mesh, dlp, soar, threat_intel]
+
+  - id: ueba
+    name: UEBA
+    zone: visibility
+    type: ueba
+    description: "ML-based anomaly detection"
+    connections: [siem, soar]
+
+  - id: soar
+    name: SOAR
+    zone: visibility
+    type: soar
+    description: "Cortex XSOAR / Splunk SOAR / Tines"
+    connections: [ueba, siem, threat_intel, mesh]
+
+  - id: threat_intel
+    name: Threat Intelligence
+    zone: visibility
+    type: threat_intel
+    description: "Mandiant / Recorded Future / AlienVault / OpenCTI"
+    connections: [soar, siem, dns_security, waf]

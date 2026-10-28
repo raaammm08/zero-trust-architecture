@@ -1,0 +1,22 @@
+policy.rego exists and is non-empty
+policy_test.rego exists and is non-empty
+policy.rego contains "default allow = false" or "default allow := false"
+policy.rego contains "identity_verified" or similar MFA check
+policy.rego contains "device_compliant" or similar device check
+policy.rego contains "time_authorized" or "business_hours" or time check
+policy.rego contains "location_authorized" or network/country check
+policy.rego contains "risk_acceptable" or risk score check
+policy.rego contains "deny[" or "deny contains" (explicit deny rules)
+policy.rego contains "obligations" or audit logging
+policy.rego contains "on_call" check
+policy.rego contains "phishing_resistant_mfa" or MFA method check
+policy_test.rego contains test for on-call engineer (positive)
+policy_test.rego contains test for off-call engineer (negative)
+policy_test.rego contains test for non-engineer (negative)
+policy_test.rego contains test for non-compliant device (negative)
+policy_test.rego contains test for missing MFA (negative)
+policy_test.rego contains test for high risk score (negative)
+policy_test.rego uses "with input as" for test cases
+All test cases in policy_test.rego pass when run with `opa test`
+Policy includes helper rules for modularity
+Policy references NIST 800-207 tenets in comments

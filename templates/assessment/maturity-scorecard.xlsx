@@ -1,0 +1,195 @@
+# Zero Trust Maturity Scorecard
+
+**Organization**: [Name]
+**Assessment Date**: [YYYY-MM-DD]
+**Assessor**: [Name]
+**Framework**: CISA Zero Trust Maturity Model v2
+**Version**: [1.0]
+
+---
+
+## Scoring Instructions
+
+For each sub-capability, select the maturity stage that best describes current state:
+- **Traditional (T)**: Perimeter-based, static, manual
+- **Initial (I)**: Early ZT adoption, pilot, partial automation
+- **Advanced (A)**: ZT operationalized, automated, integrated
+- **Optimal (O)**: Fully dynamic, risk-adaptive, self-healing
+
+**Pillar Score** = Lowest sub-capability stage (weakest link)
+**Overall Score** = Average of 7 pillar scores (or lowest for compliance)
+
+---
+
+## Pillar 1: Identity
+
+| Sub-Capability | Traditional | Initial | Advanced | Optimal | Current | Evidence |
+|----------------|-------------|---------|----------|---------|---------|----------|
+| **Authentication** | Static passwords, periodic rotation | MFA for all (any method), SSO deployed | Risk-based adaptive auth, continuous auth, JIT/JEA | Passwordless (FIDO2/passkeys), decentralized identity | [T/I/A/O] | |
+| **Identity Lifecycle** | Manual provisioning, annual review | HR-driven lifecycle, basic PAM | Automated lifecycle, PAM with session recording, access reviews | Real-time governance, AI-driven certification, DID/VC | [T/I/A/O] | |
+| **Privileged Access** | Shared accounts, static credentials | PAM for admins, basic session logging | JIT/JEA, zero standing privilege, workflow approvals | Ephemeral credentials, dual-control, full audit trail | [T/I/A/O] | |
+| **Workload Identity** | Static keys/secrets in code | Basic service accounts, some rotation | SPIFFE/SPIRE, cloud-native WIF, short-lived tokens | Universal workload identity, cross-cloud federation | [T/I/A/O] | |
+| **Identity Threat Detection** | None | Basic failed login alerts | ITDR, UEBA for identity, anomaly detection | Predictive identity risk, autonomous response | [T/I/A/O] | |
+
+**Pillar 1 Score**: [T/I/A/O]
+
+---
+
+## Pillar 2: Device
+
+| Sub-Capability | Traditional | Initial | Advanced | Optimal | Current | Evidence |
+|----------------|-------------|---------|----------|---------|---------|----------|
+| **Device Inventory** | None/incomplete | Basic MDM inventory, corporate only | Real-time, all endpoints (BYOD, IoT, OT), automated discovery | Authoritative, continuous, supply-chain verified | [T/I/A/O] | |
+| **Device Posture** | Domain-joined = trusted | Compliance checks (OS, encryption, AV), certificates | Real-time EDR/XDR integration, continuous posture, risk scoring | Predictive health, hardware root of trust (TPM), self-healing | [T/I/A/O] | |
+| **Device Authentication** | None/certificates | Certificate-based device auth | mTLS with device identity, hardware-bound keys | Hardware-attested identity, zero-touch provisioning | [T/I/A/O] | |
+| **BYOD / Personal Devices** | Blocked | Containerization, MAM | Context-aware access, selective wipe, app tunneling | Zero-trust BYOD, no container needed, app-level policy | [T/I/A/O] | |
+| **IoT / OT Devices** | Unmanaged | Network segmentation only | Passive profiling, behavioral baselines, micro-segmentation | Autonomous profiling, intent-based segmentation | [T/I/A/O] | |
+
+**Pillar 2 Score**: [T/I/A/O]
+
+---
+
+## Pillar 3: Network
+
+| Sub-Capability | Traditional | Initial | Advanced | Optimal | Current | Evidence |
+|----------------|-------------|---------|----------|---------|---------|----------|
+| **Network Segmentation** | Flat, VLANs only | Basic zones (DMZ, internal), SDP pilot | Micro-segmentation (identity-based), east-west encryption | Fully software-defined, per-flow authorization, intent-based | [T/I/A/O] | |
+| **Encryption** | None/perimeter only | TLS 1.2 at edge, some mTLS | All traffic encrypted (mTLS, WireGuard, IPsec), TLS 1.3 | Quantum-resistant ready, encryption follows data | [T/I/A/O] | |
+| **Remote Access** | VPN | ZTNA pilot, client-based | ZTNA for all, device posture, clientless option | Universal ZTNA, no client, continuous verification | [T/I/A/O] | |
+| **DNS Security** | Standard recursive | DNSSEC, DoH/DoT, basic filtering | Encrypted DNS, threat-intel filtering, analytics | Predictive DNS threat detection, autonomous blocking | [T/I/A/O] | |
+| **Software-Defined Networking** | Hardware, manual | SD-WAN, basic automation | Intent-based, policy-driven, ZT integrated | Self-optimizing, autonomous threat containment | [T/I/A/O] | |
+
+**Pillar 3 Score**: [T/I/A/O]
+
+---
+
+## Pillar 4: Application / Workload
+
+| Sub-Capability | Traditional | Initial | Advanced | Optimal | Current | Evidence |
+|----------------|-------------|---------|----------|---------|---------|----------|
+| **API Security** | None/WAF only | API gateway, basic auth, rate limit | Schema validation, mTLS, fine-grained AuthZ, runtime protection | Self-protecting APIs, AI-driven anomaly detection | [T/I/A/O] | |
+| **Container / Workload Security** | None | Image scanning in CI/CD | Admission control, runtime protection (eBPF), SBOM, policy-as-code | Self-attesting workloads, confidential computing, SLSA | [T/I/A/O] | |
+| **Service Mesh** | None | Pilot (Istio/Linkerd) | Full mesh, mTLS STRICT, AuthZ per service, traffic management | Zero-trust mesh, automatic policy, cross-cluster | [T/I/A/O] | |
+| **CI/CD Security** | Manual reviews | Basic SAST/DAST, secrets scan | Policy-as-code (OPA/Gatekeeper), SLSA, Sigstore, immutable | Zero-trust pipeline, automated remediation, provenance | [T/I/A/O] | |
+| **Application Identity** | Shared service accounts | Individual service accounts, rotation | SPIFFE/SPIRE, workload identity federation, short-lived | Universal workload identity, cross-cloud, confidential | [T/I/A/O] | |
+
+**Pillar 4 Score**: [T/I/A/O]
+
+---
+
+## Pillar 5: Data
+
+| Sub-Capability | Traditional | Initial | Advanced | Optimal | Current | Evidence |
+|----------------|-------------|---------|----------|---------|---------|----------|
+| **Data Classification** | None | Manual schema (4-tier), some labels | Automated ML classification, continuous, metadata-driven | Real-time, context-aware, follows data everywhere | [T/I/A/O] | |
+| **Encryption** | At-rest only (vendor) | In-transit + at-rest, CMK | Customer-managed keys everywhere, key rotation, HSM | Data-centric encryption, format-preserving, quantum-ready | [T/I/A/O] | |
+| **Data Loss Prevention** | Perimeter DLP | Email/web DLP, basic rules | Endpoint+Network+Cloud+SaaS DLP, ML classifiers, fingerprinting | Autonomous DLP, data rights management, differential privacy | [T/I/A/O] | |
+| **Access Governance** | ACLs, shared drives | Role-based, some reviews | Catalog + lineage, automated reviews, entitlement management | Self-governing data, policy follows data, decentralized | [T/I/A/O] | |
+| **Data Monitoring** | None | Access logging | Real-time analytics, anomaly detection, data risk scoring | Predictive data risk, autonomous containment | [T/I/A/O] | |
+
+**Pillar 5 Score**: [T/I/A/O]
+
+---
+
+## Pillar 6: Visibility & Analytics
+
+| Sub-Capability | Traditional | Initial | Advanced | Optimal | Current | Evidence |
+|----------------|-------------|---------|----------|---------|---------|----------|
+| **Logging & Telemetry** | Siloed, manual | Centralized SIEM, basic dashboards | OCSF/structured, 100% coverage, real-time streaming | Universal telemetry, semantic layer, data fabric | [T/I/A/O] | |
+| **User/Entity Behavior Analytics** | None | Basic rules, thresholds | ML-based UEBA, peer grouping, risk scoring | Predictive, explainable AI, adaptive baselines | [T/I/A/O] | |
+| **Security Orchestration (SOAR)** | Manual runbooks | Basic automation, some playbooks | Cross-pillar playbooks, 80%+ auto-response | Autonomous response, self-healing, closed-loop | [T/I/A/O] | |
+| **Threat Intelligence** | Feed consumption | Integrated TIP, basic enrichment | Auto-enrichment, scoring, feed validation, MITRE mapping | Predictive intel, autonomous sharing, graph-based | [T/I/A/O] | |
+| **Cross-Pillar Correlation** | None | Some dashboards | Unified analytics, identity+device+network+app | Holistic risk scoring, attack path analysis | [T/I/A/O] | |
+
+**Pillar 6 Score**: [T/I/A/O]
+
+---
+
+## Pillar 7: Automation & Orchestration
+
+| Sub-Capability | Traditional | Initial | Advanced | Optimal | Current | Evidence |
+|----------------|-------------|---------|----------|---------|---------|----------|
+| **Policy as Code** | Manual GUI | Some IaC, basic policy files | GitOps for all policy, automated testing, version control | Self-driving policy, simulation, what-if analysis | [T/I/A/O] | |
+| **Infrastructure as Code** | Manual/partial | Terraform/ARM/Bicep, modules | GitOps, policy gates, drift detection, auto-remediate | Self-healing infrastructure, intent-based | [T/I/A/O] | |
+| **Adaptive/Contextual Policy** | Static rules | Some context (time, location) | Real-time context (risk, posture, threat), dynamic | AI-driven, predictive, continuous optimization | [T/I/A/O] | |
+| **Automated Compliance** | Manual evidence | Scheduled scans, reports | Continuous evidence, control mapping, cATO-ready | Autonomous compliance, real-time attestation | [T/I/A/O] | |
+| **ChatOps / Collaboration** | Email/tickets | Basic bot, notifications | Integrated approvals, self-service, contextual | Natural language ops, autonomous coordination | [T/I/A/O] | |
+
+**Pillar 7 Score**: [T/I/A/O]
+
+---
+
+## Summary Dashboard
+
+### Maturity Heatmap
+```
+                    Traditional  Initial  Advanced  Optimal
+Identity                  ████       ██       ░░        ░░
+Device                    ████       ████     ░░        ░░
+Network                   ██████     ████     ░░        ░░
+Application/Workload      ████████   ████     ░░        ░░
+Data                      ██████████ ████     ░░        ░░
+Visibility & Analytics    ██████████ ██████   ░░        ░░
+Automation & Orchestration ████████████████ ░░        ░░
+```
+
+### Overall Maturity
+| Metric | Value |
+|--------|-------|
+| **Average Stage** | [e.g., 1.7 = between Initial and Advanced] |
+| **Lowest Pillar** | [Pillar name] - [Stage] |
+| **Highest Pillar** | [Pillar name] - [Stage] |
+| **Compliance Ready** | [Yes/No - for target framework] |
+
+### Stage Definitions
+- **Traditional (1.0-1.4)**: Perimeter-based security
+- **Initial (1.5-2.4)**: Early Zero Trust adoption
+- **Advanced (2.5-3.4)**: Zero Trust operationalized
+- **Optimal (3.5-4.0)**: Fully dynamic, risk-adaptive
+
+---
+
+## Target State Roadmap
+
+| Pillar | Current | 6 Months | 12 Months | 24 Months | 36 Months |
+|--------|---------|----------|-----------|-----------|-----------|
+| Identity | [Stage] | [Stage] | [Stage] | [Stage] | Optimal |
+| Device | [Stage] | [Stage] | [Stage] | [Stage] | Optimal |
+| Network | [Stage] | [Stage] | [Stage] | [Stage] | Optimal |
+| Application | [Stage] | [Stage] | [Stage] | [Stage] | Optimal |
+| Data | [Stage] | [Stage] | [Stage] | [Stage] | Optimal |
+| Visibility | [Stage] | [Stage] | [Stage] | [Stage] | Optimal |
+| Automation | [Stage] | [Stage] | [Stage] | [Stage] | Optimal |
+
+---
+
+## Action Items by Priority
+
+| Priority | Gap | Pillar | Action | Owner | Target Date |
+|----------|-----|--------|--------|-------|-------------|
+| P0 | [Description] | [Pillar] | [Specific action] | [Owner] | [Date] |
+| P1 | [Description] | [Pillar] | [Specific action] | [Owner] | [Date] |
+| P2 | [Description] | [Pillar] | [Specific action] | [Owner] | [Date] |
+
+---
+
+## Appendices
+
+### A. Assessment Participants
+| Name | Role | Organization | Pillars Assessed |
+|------|------|--------------|------------------|
+| | | | |
+
+### B. Documents Reviewed
+| Document | Version | Date | Relevance |
+|----------|---------|------|-----------|
+| | | | |
+
+### C. Tool Outputs
+| Tool | Output Location | Date |
+|------|----------------|------|
+| | | |
+
+---
+
+*Confidential. Distribute per classification policy.*

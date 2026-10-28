@@ -1,0 +1,73 @@
+name: assess-cisa-ztmm
+description: Assess Zero Trust maturity against CISA ZTMM for a mid-size enterprise
+prompt: |
+  Assess the Zero Trust maturity of a mid-size enterprise (1,500 employees) with the following current state:
+
+  IDENTITY:
+  - MFA deployed via push notifications for all users (no FIDO2)
+  - Okta as primary IdP with AD sync
+  - PAM solution for domain admins only (not cloud/service accounts)
+  - Manual quarterly access reviews
+  - No workload identity (static keys in CI/CD)
+
+  DEVICE:
+  - Jamf for Mac, Intune for Windows (80% coverage)
+  - Basic compliance checks (OS version, encryption)
+  - No EDR integration with access policy
+  - No device certificates
+  - BYOD not supported
+
+  NETWORK:
+  - VPN for remote access (Cisco AnyConnect)
+  - Flat network with VLANs only (no micro-segmentation)
+  - TLS 1.2 at edge, no mTLS internally
+  - Standard DNS (no DoH/DoT, no filtering)
+
+  APPLICATION/WORKLOAD:
+  - Kubernetes (EKS) with no service mesh
+  - API gateway (AWS API GW) with basic auth
+  - Container scanning in CI/CD (Trivy)
+  - No admission control, no runtime protection
+
+  DATA:
+  - No classification schema
+  - Encryption at rest (AWS KMS default)
+  - DLP only for email (M365)
+  - No IRM, no data catalog
+
+  VISIBILITY & ANALYTICS:
+  - Splunk for logs (60% coverage)
+  - Basic dashboards, no UEBA
+  - Manual incident response
+  - No threat intelligence integration
+
+  AUTOMATION & ORCHESTRATION:
+  - Terraform for infrastructure
+  - Manual policy changes via console
+  - No policy-as-code
+  - No SOAR
+
+  Produce:
+  1. CISA ZTMM maturity scorecard with current stage per sub-capability
+  2. Overall pillar scores (Traditional/Initial/Advanced/Optimal)
+  3. Top 5 critical gaps with risk ratings
+  4. Prioritized remediation roadmap (Quick wins, Foundation, Advanced)
+  5. Investment summary for Year 1-3
+  6. Success metrics (KPIs) with baselines and targets
+expected_outputs:
+  - maturity_scorecard.md
+  - maturity_scorecard.json
+  - gap_analysis.md
+  - remediation_roadmap.md
+  - investment_summary.md
+  - kpi_targets.md
+success_criteria:
+  - Scores all 35 sub-capabilities (5 per pillar × 7 pillars)
+  - Uses Traditional/Initial/Advanced/Optimal for each
+  - Pillar score = lowest sub-capability (weakest link)
+  - Identifies Identity and Network as lowest pillars (Traditional/Initial)
+  - Top 5 gaps include: no FIDO2, VPN-only, flat network, no classification, no UEBA
+  - Roadmap has Quick Wins (0-3mo), Foundation (3-12mo), Advanced (12-24mo)
+  - Investment summary includes personnel and tooling costs
+  - KPIs have baselines and measurable targets
+  - References CISA ZTMM v2 and NIST 800-207

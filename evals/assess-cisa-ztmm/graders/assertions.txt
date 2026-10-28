@@ -1,0 +1,29 @@
+maturity_scorecard.md exists and is non-empty
+maturity_scorecard.json exists and is valid JSON
+gap_analysis.md exists and is non-empty
+remediation_roadmap.md exists and is non-empty
+investment_summary.md exists and is non-empty
+kpi_targets.md exists and is non-empty
+maturity_scorecard.md contains all 7 pillars
+maturity_scorecard.md contains 35 sub-capabilities (5 per pillar)
+Each sub-capability scored as Traditional, Initial, Advanced, or Optimal
+Pillar scores use weakest-link (lowest sub-capability)
+Identity pillar scored as Initial or Traditional
+Network pillar scored as Traditional
+Device pillar scored as Traditional (weakest link: no device certificates)
+Application pillar scored as Initial or Traditional
+Data pillar scored as Traditional
+Visibility pillar scored as Traditional
+Automation pillar scored as Traditional
+gap_analysis.md identifies at least 5 gaps with risk ratings
+gap_analysis.md includes "FIDO2" or "phishing-resistant MFA" as critical gap
+gap_analysis.md includes "VPN" or "flat network" as critical gap
+gap_analysis.md includes "classification" or "DLP" as high gap
+gap_analysis.md includes "UEBA" or "visibility" as high gap
+remediation_roadmap.md has three phases: Quick Wins, Foundation, Advanced
+remediation_roadmap.md Quick Wins includes FIDO2 rollout and device inventory
+remediation_roadmap.md Foundation includes ZTNA and micro-segmentation
+investment_summary.md includes Year 1, Year 2, Year 3 costs
+investment_summary.md breaks down by category (Identity, Device, Network, etc.)
+kpi_targets.md includes baselines and targets for MTTD, MTTR, MFA%, etc.
+All outputs reference CISA ZTMM v2 and NIST 800-207

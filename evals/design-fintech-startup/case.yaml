@@ -1,0 +1,28 @@
+name: design-fintech-startup
+description: Design a Zero Trust architecture for a cloud-native fintech startup on AWS
+prompt: |
+  Design a Zero Trust architecture for a 200-person fintech startup that is cloud-native on AWS. They use Okta for identity, have a Kubernetes cluster (EKS) running microservices, use RDS PostgreSQL and S3 for data, and need to achieve SOC 2 Type II compliance within 6 months. They currently use VPN for remote access and have no micro-segmentation.
+
+  Requirements:
+  1. Design document following the architecture design template
+  2. Mermaid diagrams for architecture and data flows
+  3. Migration plan with phases (0-6 months for SOC 2 readiness)
+  4. Component inventory with technology choices
+  5. Risk assessment with mitigations
+  6. CISA ZTMM target maturity stages per pillar
+expected_outputs:
+  - architecture_design.md
+  - migration_plan.md
+  - component_inventory.json
+  - mermaid_diagrams.mmd
+  - risk_assessment.md
+  - ztmm_targets.json
+success_criteria:
+  - Covers all 7 NIST 800-207 tenets
+  - Includes Mermaid diagrams that render correctly
+  - Migration plan addresses SOC 2 timeline
+  - Technology choices are AWS-native and Zero Trust aligned
+  - Risk assessment identifies VPN removal as critical
+  - ZTMM targets are realistic (Initial→Advanced in 6 months)
+  - References NIST 800-207 and CISA ZTMM
+  - Includes all required output files

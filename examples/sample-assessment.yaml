@@ -1,0 +1,54 @@
+metadata:
+  organization: "Example Corp"
+  date: "2024-01-15"
+  assessor: "Security Team"
+  framework: "CISA ZTMM v2"
+
+Identity:
+  Authentication: "initial"
+  Identity Lifecycle: "initial"
+  Privileged Access: "initial"
+  Workload Identity: "traditional"
+  Identity Threat Detection: "traditional"
+
+Device:
+  Device Inventory: "initial"
+  Device Posture: "initial"
+  Device Authentication: "traditional"
+  BYOD / Personal Devices: "traditional"
+  IoT / OT Devices: "traditional"
+
+Network:
+  Network Segmentation: "traditional"
+  Encryption: "initial"
+  Remote Access: "traditional"
+  DNS Security: "traditional"
+  Software-Defined Networking: "traditional"
+
+Application/Workload:
+  API Security: "initial"
+  Container / Workload Security: "initial"
+  Service Mesh: "traditional"
+  CI/CD Security: "initial"
+  Application Identity: "traditional"
+
+Data:
+  Data Classification: "traditional"
+  Encryption: "initial"
+  Data Loss Prevention: "traditional"
+  Access Governance: "traditional"
+  Data Monitoring: "traditional"
+
+Visibility & Analytics:
+  Logging & Telemetry: "initial"
+  User/Entity Behavior Analytics: "traditional"
+  Security Orchestration (SOAR): "traditional"
+  Threat Intelligence: "initial"
+  Cross-Pillar Correlation: "traditional"
+
+Automation & Orchestration:
+  Policy as Code: "traditional"
+  Infrastructure as Code: "initial"
+  Adaptive/Contextual Policy: "traditional"
+  Automated Compliance: "traditional"
+  ChatOps / Collaboration: "traditional"

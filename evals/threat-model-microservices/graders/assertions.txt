@@ -1,0 +1,25 @@
+threat_model.md exists and is non-empty
+threat_model.json exists and is valid JSON
+attack_trees.mmd exists and contains valid Mermaid
+attack_mapping.csv exists and is valid CSV
+gap_analysis.md exists and is non-empty
+mitigations.md exists and is non-empty
+validation_tests.md exists and is non-empty
+threat_model.md defines at least 5 trust zones
+threat_model.md includes STRIDE analysis for each zone
+threat_model.md includes MITRE ATT&CK technique IDs (Txxxx format)
+threat_model.md maps ATT&CK techniques to NIST 800-207 tenet numbers (1-7)
+attack_trees.mmd contains two attack trees (production data, cluster admin)
+attack_trees.mmd uses Mermaid graph syntax
+attack_mapping.csv has columns for ATT&CK Tactic, Technique, ZT Tenet
+attack_mapping.csv covers all 14 ATT&CK Enterprise tactics
+gap_analysis.md identifies missing mTLS or service mesh
+gap_analysis.md identifies missing runtime protection or admission control
+gap_analysis.md identifies missing UEBA or SIEM
+gap_analysis.md identifies static secrets in CI/CD
+mitigations.md prioritizes by risk and effort
+mitigations.md includes service mesh deployment as high priority
+validation_tests.md includes test for pod-to-pod authorization
+validation_tests.md includes test for secret scanning in CI/CD
+validation_tests.md includes test for lateral movement prevention
+All outputs reference NIST 800-207 tenets by number

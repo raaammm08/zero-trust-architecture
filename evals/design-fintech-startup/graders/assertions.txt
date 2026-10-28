@@ -1,0 +1,16 @@
+architecture_design.md exists and is non-empty
+migration_plan.md exists and is non-empty
+component_inventory.json exists and is valid JSON
+mermaid_diagrams.mmd exists and contains valid Mermaid syntax
+risk_assessment.md exists and is non-empty
+ztmm_targets.json exists and is valid JSON
+architecture_design.md contains "NIST 800-207" or "nist-800-207"
+architecture_design.md contains all seven tenets: "All data sources", "All communication is secured", "per-session basis", "dynamic policy", "monitors and measures", "authentication and authorization are dynamic", "collects as much information"
+architecture_design.md contains "CISA ZTMM" or "cisa-ztmm" or "Zero Trust Maturity Model"
+migration_plan.md contains phase timeline for 0-6 months
+migration_plan.md addresses VPN removal or ZTNA deployment
+risk_assessment.md identifies VPN or flat network as critical/high risk
+component_inventory.json includes identity, network, platform, data, visibility components
+ztmm_targets.json specifies target stages for all 7 pillars
+mermaid_diagrams.mmd contains "graph" or "flowchart" keyword
+mermaid_diagrams.mmd contains at least two subgraphs (trust zones)

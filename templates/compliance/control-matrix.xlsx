@@ -1,0 +1,229 @@
+# Zero Trust Compliance Control Matrix
+
+**Organization**: [Name]
+**Assessment Date**: [YYYY-MM-DD]
+**Frameworks**: [NIST 800-53, FedRAMP, CMMC, ISO 27001, SOC 2, HIPAA, PCI-DSS]
+**Scope**: [Systems in scope]
+
+---
+
+## Mapping Methodology
+
+1. **NIST SP 800-207 Tenets** → **NIST SP 800-53 Rev 5 Controls** → **Target Framework Controls**
+2. Each ZT tenet maps to multiple 800-53 controls
+3. 800-53 controls map to framework-specific controls
+4. Evidence requirements defined per control
+
+---
+
+## Master Mapping Table
+
+| ZT Tenet | NIST 800-53 Rev 5 | FedRAMP High | CMMC 2.0 L3 | ISO 27001:2022 | SOC 2 | HIPAA | PCI-DSS 4.0 |
+|----------|-------------------|--------------|-------------|----------------|-------|-------|-------------|
+| **1. All Resources** | CM-8, CM-9, PM-5 | CM-8, CM-9 | CM.L2-3.4.9 | A.5.9, A.8.1.1 | CC6.1 | §164.308(a)(1) | Req 2.2, 2.3 |
+| **2. Secure Comms** | SC-7, SC-8, SC-13, SC-23 | SC-7, SC-8, SC-13 | SC.L2-3.13.11, SC.L2-3.13.12 | A.8.2.1, A.13.1.1, A.13.2.1 | CC6.1, CC6.7 | §164.312(e)(1), (e)(2) | Req 2.3, 4.1 |
+| **3. Per-Session** | AC-2, AC-3, AC-12, AC-17 | AC-2, AC-3, AC-12, AC-17 | AC.L2-3.1.1, AC.L2-3.1.2, IA.L2-3.5.2 | A.9.2.1, A.9.2.2, A.9.4.2 | CC6.1, CC6.2 | §164.312(a)(1) | Req 7.1, 8.1 |
+| **4. Dynamic Policy** | AC-2, AC-3, AC-4, AC-16, SC-7 | AC-2, AC-3, AC-4, AC-16 | AC.L2-3.1.1, AC.L2-3.1.3 | A.9.1.2, A.9.2.3, A.9.4.1 | CC6.1, CC6.3, CC6.7 | §164.312(a)(1) | Req 7.1, 7.2 |
+| **5. Monitor Posture** | SI-4, SI-7, CM-11, RA-5, CA-7 | SI-4, SI-7, CM-11, RA-5 | SI.L2-3.14.1, SI.L2-3.14.2, RA.L2-3.11.1 | A.12.4.1, A.12.6.1, A.16.1.1 | CC7.1, CC7.2, CC7.3 | §164.308(a)(5), §164.312(b) | Req 10.1, 10.2, 11.5 |
+| **6. Dynamic AuthZ** | IA-2, IA-3, IA-4, IA-5, IA-8, AC-2 | IA-2, IA-3, IA-4, IA-5, IA-8 | IA.L2-3.5.1, IA.L2-3.5.2, IA.L2-3.5.3 | A.9.3.1, A.9.4.2, A.9.4.3 | CC6.1, CC6.2 | §164.312(a)(1), (d) | Req 8.1, 8.2, 8.3 |
+| **7. Collect/Improve** | AU-2, AU-3, AU-6, AU-12, AU-14, IR-4, IR-5, IR-6, PM-14 | AU-2, AU-3, AU-6, AU-12, AU-14 | AU.L2-3.3.1, AU.L2-3.3.2, IR.L2-3.6.1 | A.12.4.1, A.12.4.3, A.16.1.5 | CC7.2, CC7.3, CC7.4 | §164.308(a)(5), §164.312(b) | Req 10.1, 10.2, 10.5, 11.4 |
+
+---
+
+## Detailed Control Mapping (Examples)
+
+### Tenet 1: All Data Sources and Computing Services Are Resources
+
+| 800-53 Control | Control Title | FedRAMP Param | CMMC Practice | ISO 27001 | Evidence Required | ZT Implementation |
+|----------------|---------------|---------------|---------------|-----------|-------------------|-------------------|
+| CM-8 | Component Inventory | Automated discovery, continuous | CM.L2-3.4.9 | A.8.1.1 | CMDB export, discovery scan results, reconciliation report | Automated asset discovery (cloud, on-prem, SaaS), classification tags |
+| CM-9 | Configuration Management Plan | Baseline + drift detection | - | A.12.1.2 | Config baselines, drift reports, remediation tickets | IaC, GitOps, drift detection, auto-remediation |
+| PM-5 | System Inventory | Enterprise-wide, authoritative | - | A.5.9 | System registry, data flow diagrams, criticality ratings | Service catalog, dependency mapping, business impact analysis |
+
+### Tenet 2: All Communication Is Secured Regardless of Network Location
+
+| 800-53 Control | Control Title | FedRAMP Param | CMMC Practice | ISO 27001 | Evidence Required | ZT Implementation |
+|----------------|---------------|---------------|---------------|-----------|-------------------|-------------------|
+| SC-7 | Boundary Protection | Deny by default, micro-seg | SC.L2-3.13.11 | A.13.1.1 | Network diagrams, firewall rules, segmentation test results | Micro-segmentation, ZTNA, deny-by-default, east-west encryption |
+| SC-8 | Transmission Confidentiality/Integrity | TLS 1.3, mTLS everywhere | SC.L2-3.13.12 | A.13.2.1 | Cert inventory, TLS scan results, mTLS verification | mTLS (service mesh), TLS 1.3, certificate automation |
+| SC-13 | Cryptographic Protection | FIPS 140-3, key rotation | - | A.10.1.1 | KMS/HSM config, key rotation logs, algorithm certs | CMK, automated rotation, HSM, post-quantum ready |
+| SC-23 | Session Authenticity | Mutual auth, binding | - | A.13.2.1 | mTLS config, token binding proof, session logs | SPIFFE, token binding, channel binding |
+
+### Tenet 3: Access Granted on Per-Session Basis
+
+| 800-53 Control | Control Title | FedRAMP Param | CMMC Practice | ISO 27001 | Evidence Required | ZT Implementation |
+|----------------|---------------|---------------|---------------|-----------|-------------------|-------------------|
+| AC-2 | Account Management | Automated lifecycle, JIT | AC.L2-3.1.1 | A.9.2.1 | Provisioning logs, deprovisioning SLA, access review results | HR-driven lifecycle, JIT access, automated deprovisioning |
+| AC-3 | Access Enforcement | Dynamic, per-session | AC.L2-3.1.2 | A.9.2.2 | Policy engine logs, decision traces, session records | PDP/PEP, dynamic policy, short-lived sessions |
+| AC-12 | Session Termination | Idle timeout, revocation | - | A.9.4.2 | Session logs, revocation tests, timeout config | Short TTL, immediate revocation, continuous eval |
+| AC-17 | Remote Access | ZTNA, no VPN, posture | - | A.9.4.3 | ZTNA config, posture checks, access logs | ZTNA, device posture, continuous verification |
+
+### Tenet 4: Access Determined by Dynamic Policy
+
+| 800-53 Control | Control Title | FedRAMP Param | CMMC Practice | ISO 27001 | Evidence Required | ZT Implementation |
+|----------------|---------------|---------------|---------------|-----------|-------------------|-------------------|
+| AC-2 | Account Management | Attribute-based, risk-adaptive | AC.L2-3.1.1 | A.9.1.2 | Policy definitions, attribute sources, decision logs | OPA/Cedar, real-time attributes (risk, posture, threat) |
+| AC-3 | Access Enforcement | Fine-grained, context-aware | AC.L2-3.1.3 | A.9.2.3 | AuthZ decisions, obligation logs, break-glass records | ABAC, obligations (step-up, audit), break-glass |
+| AC-4 | Information Flow Enforcement | Micro-segmentation, data flow | - | A.9.4.1 | Data flow diagrams, segmentation rules, flow logs | Micro-seg, DLP, data classification, flow control |
+| AC-16 | Security/Privacy Attributes | Dynamic labels, classification | - | A.9.4.1 | Label schema, auto-labeling results, label enforcement | Auto-classification, sensitivity labels, policy by label |
+| SC-7 | Boundary Protection | Identity-based, not IP-based | SC.L2-3.13.11 | A.13.1.1 | Identity-based rules, policy decision logs | Identity-based micro-seg, zero network trust |
+
+### Tenet 5: Monitor and Measure Integrity and Security Posture
+
+| 800-53 Control | Control Title | FedRAMP Param | CMMC Practice | ISO 27001 | Evidence Required | ZT Implementation |
+|----------------|---------------|---------------|---------------|-----------|-------------------|-------------------|
+| SI-4 | System Monitoring | Real-time, automated response | SI.L2-3.14.1 | A.12.4.1 | Monitoring config, alert rules, response times | EDR/XDR, CSPM, network sensors, UEBA, SOAR |
+| SI-7 | Software/Firmware Integrity | Signed artifacts, runtime | SI.L2-3.14.2 | A.12.6.1 | SBOM, signature verification, runtime attestation | Sigstore, admission control, runtime security |
+| CM-11 | User-Installed Software | Block unauthorized, allowlist | - | A.12.5.1 | Allowlist, block logs, exception process | Application control, allowlist, container policy |
+| RA-5 | Vulnerability Scanning | Continuous, risk-prioritized | RA.L2-3.11.1 | A.12.6.1 | Scan results, remediation SLAs, risk scores | Container scanning, SAST/DAST, prioritized remediation |
+| CA-7 | Continuous Monitoring | Automated, dashboard, cATO | - | A.12.4.1 | Monitoring dashboard, control status, POA&M | cATO pipeline, continuous control monitoring |
+
+### Tenet 6: Dynamic Authentication and Authorization
+
+| 800-53 Control | Control Title | FedRAMP Param | CMMC Practice | ISO 27001 | Evidence Required | ZT Implementation |
+|----------------|---------------|---------------|---------------|-----------|-------------------|-------------------|
+| IA-2 | Identification/Authentication (Org Users) | Phishing-resistant MFA | IA.L2-3.5.1 | A.9.3.1 | MFA config, enrollment rates, auth logs | FIDO2/passkeys, conditional access, risk-based |
+| IA-3 | Device Identification/Authentication | Certificates, posture | IA.L2-3.5.2 | A.9.4.2 | Device cert inventory, posture API, compliance reports | Device certs, MDM/EDR posture, certificate auth |
+| IA-4 | Identifier Management | Unique, lifecycle, federation | - | A.9.3.1 | IdP config, federation trusts, identifier uniqueness | SPIFFE, workload identity, federation |
+| IA-5 | Authenticator Management | Rotation, revocation, hardware | IA.L2-3.5.3 | A.9.4.3 | Rotation logs, revocation tests, hardware token inventory | Short-lived certs/tokens, auto-rotation, FIDO2 |
+| IA-8 | Non-Local Authentication | ZTNA, no VPN, MFA | - | A.9.4.3 | ZTNA config, MFA enforcement, remote access logs | ZTNA, conditional access, no implicit trust |
+
+### Tenet 7: Collect Information to Improve Security Posture
+
+| 800-53 Control | Control Title | FedRAMP Param | CMMC Practice | ISO 27001 | Evidence Required | ZT Implementation |
+|----------------|---------------|---------------|---------------|-----------|-------------------|-------------------|
+| AU-2 | Event Logging | All pillars, structured | AU.L2-3.3.1 | A.12.4.1 | Log sources, format (OCSF), retention, integrity | Centralized logging, all 7 pillars, immutable storage |
+| AU-3 | Log Content | Context-rich, correlation IDs | AU.L2-3.3.2 | A.12.4.1 | Log schema, field mapping, sample logs | User, device, resource, action, decision, context |
+| AU-6 | Audit Review | Automated, continuous | - | A.12.4.3 | Review automation, anomaly detection, reports | UEBA, automated review, exception reporting |
+| AU-12 | Audit Generation | Real-time, tamper-proof | - | A.12.4.1 | Generation config, integrity verification, alerts | Immutable logs, cryptographic chaining, alerts |
+| AU-14 | Session Audit | Full session capture | - | A.12.4.3 | Session recordings, search, retention | PAM recording, API audit, database audit |
+| IR-4 | Incident Handling | Automated, playbooks | IR.L2-3.6.1 | A.16.1.5 | Playbooks, MTTR metrics, after-action reports | SOAR, automated containment, runbooks |
+| IR-5 | Incident Monitoring | Continuous, correlated | - | A.16.1.5 | Monitoring dashboard, correlation rules, threat intel | UEBA, threat intel integration, attack path analysis |
+| IR-6 | Incident Reporting | Automated, stakeholder | - | A.16.1.6 | Report templates, automation, comms log | Automated reports, executive dashboards, regulatory |
+| PM-14 | Testing/Training/Evaluation | Red team, purple team, chaos | - | A.12.6.1 | Test plans, results, improvement actions | Red team, chaos engineering, policy simulation |
+
+---
+
+## Evidence Collection Guide
+
+### Per Control Evidence Package
+```
+evidence/
+├── CM-8/
+│   ├── cmdb-export-YYYYMMDD.csv
+│   ├── discovery-scan-results.json
+│   ├── reconciliation-report.pdf
+│   └── classification-tags.yaml
+├── SC-7/
+│   ├── network-diagram.drawio
+│   ├── firewall-rules-export.json
+│   ├── microseg-test-results.pdf
+│   └── ztna-config.yaml
+├── IA-2/
+│   ├── mfa-enrollment-report.csv
+│   ├── fido2-deployment-status.pdf
+│   ├── conditional-access-policies.json
+│   └── auth-logs-sample.json
+└── SI-4/
+    ├── edr-deployment-report.pdf
+    ├── ueba-model-metrics.json
+    ├── soar-playbook-list.yaml
+    └── mttd-mttr-metrics.csv
+```
+
+### Evidence Automation
+- **Continuous**: API pulls from tools (SIEM, CSPM, MDM, IdP)
+- **Scheduled**: Weekly config exports, monthly scan results
+- **On-Demand**: Auditor requests, incident evidence
+- **Format**: JSON (machine-readable) + PDF (human-readable)
+- **Integrity**: Signed, timestamped, stored in WORM storage
+
+---
+
+## Continuous Monitoring Dashboard Specs
+
+### Key Metrics per Tenet
+| Tenet | Metric | Target | Source | Frequency |
+|-------|--------|--------|--------|-----------|
+| 1 | Asset coverage | 100% | CMDB + Discovery | Continuous |
+| 1 | Drift detection | <1 hr | IaC + GitOps | Continuous |
+| 2 | mTLS coverage | 100% | Service Mesh + Cert Manager | Continuous |
+| 2 | TLS version | 100% TLS 1.3 | Cert Scanner | Daily |
+| 3 | Session TTL | <1 hr (sensitive) | PDP Logs | Continuous |
+| 3 | Revocation latency | <30 sec | PDP + PEP | Continuous |
+| 4 | Policy decision latency | <50ms p99 | PDP Metrics | Continuous |
+| 4 | Policy test pass rate | 100% | CI/CD Pipeline | Per commit |
+| 5 | Log ingestion latency | <5 min | SIEM | Continuous |
+| 5 | Alert coverage (MITRE) | >90% | Detection Engineering | Weekly |
+| 6 | Phishing-resistant MFA | 100% | IdP | Daily |
+| 6 | Device posture freshness | <24 hr | MDM/EDR API | Continuous |
+| 7 | MTTR (P1) | <15 min | SOAR + Ticketing | Continuous |
+| 7 | Policy simulation runs | 100% changes | Policy Engine | Per change |
+
+---
+
+## Framework-Specific Notes
+
+### FedRAMP High
+- All 800-53 controls required
+- Continuous monitoring (ConMon) monthly reporting
+- 3PAO assessment annually
+- ZT aligns with FedRAMP's "Zero Trust Architecture" guidance
+
+### CMMC 2.0 Level 3
+- 110 practices (NIST 800-171 + 20 additional)
+- Focus on CUI protection
+- ZT tenets map directly to AC, IA, SC, SI domains
+- Assessment by C3PAO
+
+### ISO 27001:2022
+- Annex A controls mapped
+- Statement of Applicability (SoA) must reflect ZT controls
+- Internal audit program must cover ZT controls
+- Management review includes ZT maturity
+
+### SOC 2 Type II
+- Trust Services Criteria: Security, Availability, Confidentiality
+- ZT controls map to CC6.x (Logical Access), CC7.x (Monitoring)
+- Continuous monitoring evidence for Type II period
+- Bridge letter for ZT-specific controls
+
+### HIPAA
+- Security Rule: §164.308 (Admin), §164.312 (Technical), §164.310 (Physical)
+- ZT addresses: Access control (§164.312(a)), Audit (§164.312(b)), Integrity (§164.312(c)), Transmission (§164.312(e))
+- Business Associate Agreements must reflect ZT requirements
+
+### PCI-DSS 4.0
+- Requirements 2, 7, 8, 10, 11 directly supported by ZT
+- Requirement 7 (Access Control): ZT = least privilege + dynamic
+- Requirement 8 (Authentication): ZT = phishing-resistant MFA + device trust
+- Requirement 10 (Logging): ZT = all pillars, immutable, correlated
+- Requirement 11 (Testing): ZT = continuous, automated, red team
+
+---
+
+## Gap Remediation Tracker
+
+| Control | Framework | Current State | Target State | Gap | Remediation | Owner | Due Date | Status |
+|---------|-----------|---------------|--------------|-----|-------------|-------|----------|--------|
+| IA-2 (MFA) | FedRAMP/CMMC | Push only | FIDO2 100% | Phishing-resistant | Deploy FIDO2, disable push | Identity | 2024-06-30 | In Progress |
+| SC-7 (Micro-seg) | FedRAMP/ISO | VLANs only | Identity-based | Implicit trust | Deploy service mesh + ZTNA | Network | 2024-12-30 | Planned |
+| SI-4 (UEBA) | FedRAMP/SOC2 | Rules only | ML-based | No behavioral | Deploy UEBA, tune models | SecOps | 2024-09-30 | In Progress |
+| AC-2 (JIT) | FedRAMP/HIPAA | Standing privilege | Zero standing | Overprivileged | Deploy PAM JIT | Identity | 2024-06-30 | In Progress |
+
+---
+
+## Appendix: Control Inheritance Matrix
+
+| ZT Capability | Inherits From | Satisfies (Partial) | Satisfies (Full) |
+|---------------|---------------|---------------------|------------------|
+| Phishing-resistant MFA | IA-2, IA-5 | AC-2, AC-3, AC-17 | IA-2, IA-5, IA-8 |
+| Device posture | SI-4, CM-11 | AC-3, SC-7 | IA-3, IA-4 |
+| Service mesh mTLS | SC-8, SC-13, SC-7 | AC-3, AC-4, AC-16 | SC-7, SC-8, SC-13 |
+| Policy-as-code (OPA) | AC-3, AC-4, AC-16, CM-9 | SI-4, AU-2 | AC-3, AC-4, AC-16, CM-9 |
+| UEBA + SOAR | SI-4, IR-4, IR-5, AU-6 | AU-3, AU-12, AU-14 | SI-4, IR-4, IR-5, AU-6 |
+| Workload identity (SPIFFE) | IA-4, IA-5, IA-8 | AC-2, AC-3, SC-7 | IA-4, IA-5, IA-8 |
+
+---
+
+*Control matrix version controlled. Update quarterly or on framework change.*

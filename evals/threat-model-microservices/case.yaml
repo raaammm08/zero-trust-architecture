@@ -1,0 +1,38 @@
+name: threat-model-microservices
+description: Threat model for Kubernetes microservices platform with Zero Trust
+prompt: |
+  Create a threat model for a Kubernetes-based microservices platform using Zero Trust principles. The platform runs on EKS with:
+  - 50+ microservices communicating via gRPC
+  - External API gateway (AWS API GW) for north-south traffic
+  - RDS PostgreSQL and ElastiCache Redis for data
+  - GitHub Actions for CI/CD
+  - ArgoCD for GitOps deployment
+  - CloudWatch for logging, no SIEM yet
+
+  Apply STRIDE per trust zone and map to MITRE ATT&CK. Identify how each NIST 800-207 tenet mitigates threats. Produce:
+  1. System decomposition with trust zones
+  2. STRIDE analysis per zone (Internet, Edge, Identity, Platform, Data)
+  3. Attack trees for: production data access, cluster admin compromise
+  4. MITRE ATT&CK mapping to ZT tenets
+  5. Gap analysis of current controls vs ZT mitigations
+  6. Prioritized mitigations with effort/risk ratings
+  7. Test cases to validate mitigations
+expected_outputs:
+  - threat_model.md
+  - threat_model.json
+  - attack_trees.mmd
+  - attack_mapping.csv
+  - gap_analysis.md
+  - mitigations.md
+  - validation_tests.md
+success_criteria:
+  - Defines trust zones: Internet, Edge, Identity, Platform, Data, Visibility
+  - STRIDE analysis for each zone with ATT&CK technique IDs
+  - Attack trees in Mermaid format for two critical paths
+  - MITRE ATT&CK mapping covers all 14 Enterprise tactics
+  - Each ATT&CK technique mapped to ZT tenet(s)
+  - Gap analysis identifies: no mTLS, no service mesh, no UEBA, static secrets, no runtime protection
+  - Mitigations prioritized by risk × effort
+  - Test cases cover: pod-to-pod authZ, secret leakage, lateral movement, supply chain
+  - References NIST 800-207 tenets and STRIDE
+  - All outputs are well-structured and actionable
