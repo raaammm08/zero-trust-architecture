@@ -1,5 +1,11 @@
 # Zero Trust Architecture Skill
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+![Maturity scorecard output from score-maturity.py](docs/images/score-maturity-demo.svg)
+
+> **Limitations at a glance:** the scripts check structure, syntax, and arithmetic. They do not verify that your controls work, do not check vendor FedRAMP status or FIPS 140-3 validation, and cannot replace an assessor. Read the full list in [Part 12](#part-12-limitations-and-gotchas) before you rely on any output.
+
 A Claude Code skill and a set of command-line tools for:
 
 - designing Zero Trust architectures,

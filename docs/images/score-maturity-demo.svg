@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="302" viewBox="0 0 760 302">
+<rect width="100%" height="100%" rx="10" fill="#1e1e2e"/>
+<circle cx="22" cy="18" r="6" fill="#f38ba8"/><circle cx="42" cy="18" r="6" fill="#f9e2af"/><circle cx="62" cy="18" r="6" fill="#a6e3a1"/>
+<g font-family="Menlo, Consolas, monospace" font-size="14" fill="#cdd6f4">
+<text x="16" y="60" xml:space="preserve" fill="#a6e3a1">$ python3 scripts/score-maturity.py examples/sample-assessment.yaml</text>
+<text x="16" y="80" xml:space="preserve" fill="#cdd6f4"></text>
+<text x="16" y="100" xml:space="preserve" fill="#cdd6f4">MATURITY ASSESSMENT SUMMARY</text>
+<text x="16" y="120" xml:space="preserve" fill="#cdd6f4">==================================================</text>
+<text x="16" y="140" xml:space="preserve" fill="#f9e2af">Overall: Traditional (1.0/4.0)</text>
+<text x="16" y="160" xml:space="preserve" fill="#cdd6f4">  Identity: Traditional (1.60)</text>
+<text x="16" y="180" xml:space="preserve" fill="#cdd6f4">  Device: Traditional (1.40)</text>
+<text x="16" y="200" xml:space="preserve" fill="#cdd6f4">  Network: Traditional (1.20)</text>
+<text x="16" y="220" xml:space="preserve" fill="#cdd6f4">  Application/Workload: Traditional (1.60)</text>
+<text x="16" y="240" xml:space="preserve" fill="#cdd6f4">  Data: Traditional (1.20)</text>
+<text x="16" y="260" xml:space="preserve" fill="#cdd6f4">  Visibility &amp; Analytics: Traditional (1.40)</text>
+<text x="16" y="280" xml:space="preserve" fill="#cdd6f4">  Automation &amp; Orchestration: Traditional (1.20)</text>
+</g></svg>
