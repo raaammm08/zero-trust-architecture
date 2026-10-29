@@ -70,7 +70,8 @@ class RegoValidator:
             warnings.append(f"{file_path}: Missing 'default allow = false' (explicit deny by default)")
 
         # Check for explicit deny rules
-        if "deny[" not in content and "deny{" not in content:
+        # v1 writes `deny contains ...`; v0 wrote `deny[...]` or `deny {`
+        if not any(p in content for p in ("deny[", "deny{", "deny contains")):
             warnings.append(f"{file_path}: No explicit deny rules found")
 
         # Check for MFA verification
