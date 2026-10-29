@@ -2,7 +2,11 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-![Maturity scorecard output from score-maturity.py](docs/images/score-maturity-demo.svg)
+**A free, open-source CISA ZTMM maturity assessment tool and NIST SP 800-207 Zero Trust architecture toolkit.** Score your CISA Zero Trust Maturity Model v2 assessment, map controls to FedRAMP High and NIST 800-53, generate architecture diagrams, and test OPA/Rego and AWS Cedar access policies. No paid platform required.
+
+![Animated terminal demo: score-maturity.py prints the CISA ZTMM scorecard](docs/images/score-maturity-demo-animated.svg)
+
+**Watch the 35-second demo with narration:** [zero-trust-demo.mp4](https://github.com/raaammm08/zero-trust-architecture/releases/download/v1.0.0/zero-trust-demo.mp4) (also in the [v1.0.0 release](https://github.com/raaammm08/zero-trust-architecture/releases/tag/v1.0.0)).
 
 > **Limitations at a glance:** the scripts check structure, syntax, and arithmetic. They do not verify that your controls work, do not check vendor FedRAMP status or FIPS 140-3 validation, and cannot replace an assessor. Read the full list in [Part 12](#part-12-limitations-and-gotchas) before you rely on any output.
 
