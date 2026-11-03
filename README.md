@@ -10,6 +10,18 @@
 
 > **Limitations at a glance:** the scripts check structure, syntax, and arithmetic. They do not verify that your controls work, do not check vendor FedRAMP status or FIPS 140-3 validation, and cannot replace an assessor. Read the full list in [Part 12](#part-12-limitations-and-gotchas) before you rely on any output.
 
+## Quick start (2 minutes)
+
+Score the included sample assessment against CISA ZTMM. This needs only Python 3.9+ and PyYAML.
+
+```bash
+git clone https://github.com/raaammm08/zero-trust-architecture.git ~/.claude/skills/zero-trust-architecture
+python3 -m pip install -r ~/.claude/skills/zero-trust-architecture/requirements.txt
+python3 ~/.claude/skills/zero-trust-architecture/scripts/score-maturity.py ~/.claude/skills/zero-trust-architecture/examples/sample-assessment.yaml
+```
+
+The command prints a full JSON scorecard, then a short summary with the overall stage and each pillar's score. Add `-o scorecard.json` to save the scorecard to a file. Replace `examples/sample-assessment.yaml` with your own answers to score your organization. Then continue with [Part 2](#part-2-setup-step-by-step) for OPA and Cedar.
+
 A Claude Code skill and a set of command-line tools for:
 
 - designing Zero Trust architectures,
