@@ -3,6 +3,27 @@
 All notable changes to this project are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+## [1.1.0] - 2026-11-20
+
+### Added
+- Claude Code plugin and marketplace manifests (`.claude-plugin/`). Install with `/plugin marketplace add raaammm08/zero-trust-architecture`, then `/plugin install zero-trust-architecture@zero-trust-architecture`.
+- 15 `opa test` cases for the Rego template (`templates/policies/opa-rego-template_test.rego`), with a fixed clock so results do not depend on the time of day.
+- pytest suite (`tests/`) covering every script, format, framework, and tenet option, and the bad-input cases in the guide.
+- GitHub Actions CI: tests on Python 3.9, 3.11, and 3.13, Rego format, strict check, and unit tests, Cedar cases, and plugin manifest validation.
+- Release workflow that publishes a GitHub release from a version tag, using the matching changelog section.
+- Issue forms, pull request template, Dependabot, CODEOWNERS, security policy, and code of conduct.
+
+### Changed
+- The README is now a short overview. The full manual moved to `docs/guide.md`.
+- `SKILL.md` resolves paths against the skill's base directory, so it works for both plugin and manual installs.
+- Rego files formatted with `opa fmt`.
+
+### Fixed
+- Rego template: the 5-minute re-authentication check for sensitive actions was inverted. It allowed sessions last authenticated more than 5 minutes ago and denied fresh ones. It now requires authentication within the past 5 minutes.
+- `map-compliance.py`: the default output file now uses `.md` for Markdown (was `.markdown`), and the evidence checklist default file uses the extension of the chosen `--format` (was always `.csv`).
+
 ## [1.0.0] - 2026-10-30
 
 First public release.

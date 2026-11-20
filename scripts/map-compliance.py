@@ -312,6 +312,7 @@ def main():
     args = parser.parse_args()
 
     mapper = ComplianceMapper()
+    extension = {"csv": "csv", "json": "json", "yaml": "yaml", "markdown": "md"}[args.format]
 
     if args.tenet:
         mapping = mapper.get_mapping(args.tenet)
@@ -323,14 +324,14 @@ def main():
 
     if args.evidence_checklist:
         if not args.output:
-            args.output = f"evidence-checklist-{args.evidence_checklist}.csv"
+            args.output = f"evidence-checklist-{args.evidence_checklist}.{extension}"
         mapper.export_evidence_checklist(args.evidence_checklist, Path(args.output), args.format)
         print(f"Evidence checklist written to {args.output}")
         return
 
     frameworks = None if args.framework == "all" else [args.framework]
     if not args.output:
-        args.output = f"control-matrix.{args.format}"
+        args.output = f"control-matrix.{extension}"
 
     mapper.export_matrix(Path(args.output), args.format, frameworks)
     print(f"Control matrix written to {args.output}")

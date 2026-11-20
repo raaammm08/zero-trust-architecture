@@ -15,7 +15,7 @@ package authz
 # 4. Deploy via OPA/Gatekeeper/Envoy/Istio
 # =============================================================================
 
-default allow = false
+default allow := false
 
 # -----------------------------------------------------------------------------
 # Main Decision Rules
@@ -25,19 +25,19 @@ default allow = false
 allow if {
 	# 1. Identity verified
 	identity_verified
-	
+
 	# 2. Device compliant
 	device_compliant
-	
+
 	# 3. Context authorizes action
 	context_authorizes
-	
+
 	# 4. Resource permits access
 	resource_permits
-	
+
 	# 5. Session valid (recent auth)
 	session_valid
-	
+
 	# 6. No explicit deny
 	not explicit_deny
 }
@@ -56,10 +56,10 @@ identity_verified if {
 	input.user != {}
 	input.user.authenticated == true
 	input.user.mfa_verified == true
-	
+
 	# Phishing-resistant MFA required for sensitive resources
 	mfa_satisfies_resource
-	
+
 	# User not suspended/locked
 	not input.user.suspended
 	not input.user.locked
@@ -95,28 +95,28 @@ requires_fido2 if {
 
 device_compliant if {
 	input.device != {}
-	
+
 	# Device is managed by MDM
 	input.device.managed == true
-	
+
 	# Disk encryption enabled
 	input.device.encrypted == true
-	
+
 	# OS version meets minimum
 	os_version_compliant
-	
+
 	# EDR/AV running and healthy
 	edr_healthy
-	
+
 	# Firewall enabled
 	input.device.firewall_enabled == true
-	
+
 	# Auto-updates enabled
 	input.device.auto_updates == true
-	
+
 	# Posture score above threshold
 	input.device.posture_score >= 70
-	
+
 	# Device certificate valid (if applicable)
 	certificate_valid
 }
@@ -131,13 +131,13 @@ minimum_os_version := {
 	"windows": "11.0.0",
 	"linux": "5.15.0",
 	"ios": "16.0.0",
-	"android": "13.0.0"
+	"android": "13.0.0",
 }
 
 edr_healthy if {
 	input.device.edr != ""
 	input.device.edr_status == "healthy"
-	input.device.edr_last_scan > time.now_ns() - 86400000000000  # 24 hours
+	input.device.edr_last_scan > time.now_ns() - 86400000000000 # 24 hours
 }
 
 certificate_valid if {
@@ -156,13 +156,13 @@ certificate_valid if {
 context_authorizes if {
 	# Time-based restrictions
 	time_authorized
-	
+
 	# Location/network restrictions
 	location_authorized
-	
+
 	# Risk-based (adaptive)
 	risk_acceptable
-	
+
 	# Role/permission check
 	role_authorized
 }
@@ -214,10 +214,10 @@ high_risk_network if {
 risk_acceptable if {
 	# User risk score
 	input.context.user_risk_score <= 70
-	
+
 	# Sign-in risk
 	input.context.signin_risk in ["low", "medium"]
-	
+
 	# Device risk
 	input.context.device_risk_score <= 60
 }
@@ -226,7 +226,7 @@ role_authorized if {
 	# RBAC: user has required role for resource/action
 	required_role := role_requirements[input.resource.type][input.action]
 	input.user.roles[_] == required_role
-	
+
 	# ABAC: attribute-based conditions
 	abac_conditions_met
 }
@@ -235,23 +235,23 @@ role_requirements := {
 	"database": {
 		"read": "db_reader",
 		"write": "db_writer",
-		"admin": "db_admin"
+		"admin": "db_admin",
 	},
 	"api": {
 		"read": "api_user",
 		"write": "api_developer",
-		"admin": "api_admin"
+		"admin": "api_admin",
 	},
 	"kubernetes": {
 		"read": "k8s_viewer",
 		"write": "k8s_developer",
-		"admin": "k8s_admin"
+		"admin": "k8s_admin",
 	},
 	"storage": {
 		"read": "storage_reader",
 		"write": "storage_writer",
-		"admin": "storage_admin"
-	}
+		"admin": "storage_admin",
+	},
 }
 
 # Each condition is "not applicable, or satisfied"
@@ -319,10 +319,10 @@ eu_resident if {
 resource_permits if {
 	# Resource exists and is active
 	input.resource.active == true
-	
+
 	# Classification allows access level
 	classification_permits
-	
+
 	# Resource-specific policies
 	resource_policy_allows
 }
@@ -339,7 +339,7 @@ clearance_level := {
 	"internal": 1,
 	"confidential": 2,
 	"restricted": 3,
-	"top_secret": 4
+	"top_secret": 4,
 }
 
 resource_policy_allows if {
@@ -353,7 +353,7 @@ resource_policy_allows if {
 }
 
 # Resource-specific allow rules (populated from external data)
-resource_allow_rules := {}  # Populated via OPA Bundle/REST
+resource_allow_rules := {} # Populated via OPA Bundle/REST
 
 # -----------------------------------------------------------------------------
 # Session Validation (Tenet 3)
@@ -362,10 +362,10 @@ resource_allow_rules := {}  # Populated via OPA Bundle/REST
 session_valid if {
 	# Session not expired
 	input.session.expires_at > time.now_ns() / 1000000000
-	
+
 	# Session not revoked
 	not input.session.revoked
-	
+
 	# Re-authentication within bounds for sensitive actions
 	reauth_within_bounds
 }
@@ -375,7 +375,8 @@ reauth_within_bounds if {
 }
 
 reauth_within_bounds if {
-	input.session.last_auth < time.now_ns() / 1000000000 - 300  # 5 min
+	# Last authentication happened within the past 5 minutes
+	input.session.last_auth >= (time.now_ns() / 1000000000) - 300
 }
 
 requires_reauth if {
@@ -461,7 +462,7 @@ deny_reasons contains "Sanctioned country" if {
 
 obligations contains obligation if {
 	allow
-	
+
 	# Log all access
 	obligation := {"type": "audit_log", "level": "info"}
 }
@@ -469,7 +470,7 @@ obligations contains obligation if {
 obligations contains obligation if {
 	allow
 	sensitive_action
-	
+
 	# Enhanced logging for sensitive actions
 	obligation := {"type": "audit_log", "level": "detailed", "include": ["input", "decision"]}
 }
@@ -477,7 +478,7 @@ obligations contains obligation if {
 obligations contains obligation if {
 	allow
 	input.context.user_risk_score > 50
-	
+
 	# Step-up authentication for medium risk
 	obligation := {"type": "step_up_auth", "method": "push"}
 }
@@ -485,14 +486,12 @@ obligations contains obligation if {
 # -----------------------------------------------------------------------------
 # External Data (Loaded via OPA Bundle or REST)
 # -----------------------------------------------------------------------------
-
 # These would be populated from external sources:
 # - user_roles: mapping user -> roles
 # - device_inventory: device_id -> posture
 # - threat_intel: IP -> reputation
 # - resource_catalog: resource_id -> metadata
 # - on_call_schedule: user -> on_call_window
-
 # Example external data structure:
 # {
 #   "user_roles": { "user-123": ["engineer", "on-call"] },
@@ -500,7 +499,6 @@ obligations contains obligation if {
 #   "threat_intel": { "1.2.3.4": "malicious" },
 #   "resource_catalog": { "prod-db-01": {"classification": "confidential", "environment": "production"} }
 # }
-
 # =============================================================================
 # END OF TEMPLATE
 # =============================================================================
