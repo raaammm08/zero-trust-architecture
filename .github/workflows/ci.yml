@@ -30,8 +30,8 @@ jobs:
           - { python: "3.11", os: ubuntu-latest }
           - { python: "3.13", os: ubuntu-latest }
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python }}
           cache: pip
@@ -44,8 +44,8 @@ jobs:
     name: Policies (OPA and Cedar)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
@@ -56,7 +56,7 @@ jobs:
           version: ${{ env.OPA_VERSION }}
       - name: Restore Cedar CLI
         id: cedar-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cargo/bin/cedar
           key: cedar-cli-${{ runner.os }}-${{ env.CEDAR_VERSION }}
@@ -77,8 +77,8 @@ jobs:
     name: Claude Code plugin manifest
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
       - name: Validate plugin and marketplace
