@@ -37,7 +37,7 @@ jobs:
         run: python -m pytest -v
 
   policies:
-    name: Policies (OPA ${{ env.OPA_VERSION }}, Cedar ${{ env.CEDAR_VERSION }})
+    name: Policies (OPA and Cedar)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
