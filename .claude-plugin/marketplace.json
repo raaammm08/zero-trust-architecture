@@ -1,0 +1,14 @@
+{
+  "name": "zero-trust-architecture",
+  "description": "Zero Trust Architecture skill for Claude Code: NIST SP 800-207 and CISA ZTMM v2 design, assessment, policy, and compliance tooling.",
+  "owner": { "name": "raaammm08", "url": "https://github.com/raaammm08" },
+  "plugins": [
+    {
+      "name": "zero-trust-architecture",
+      "source": "./",
+      "description": "Design, policy, assessment, threat modeling, and compliance mapping for Zero Trust (NIST SP 800-207, CISA ZTMM v2).",
+      "category": "security",
+      "tags": ["zero-trust", "security", "compliance", "opa", "cedar"]
+    }
+  ]
+}

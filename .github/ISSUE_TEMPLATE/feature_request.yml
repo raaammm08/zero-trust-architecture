@@ -1,0 +1,36 @@
+name: Feature or content request
+description: A new framework mapping, vendor pattern, policy example, or script feature.
+labels: [enhancement]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Compliance mapping (new framework or control fix)
+        - Vendor pattern
+        - Policy template or example (Rego or Cedar)
+        - Maturity assessment (CISA ZTMM criteria)
+        - Threat modeling
+        - Script feature
+        - Documentation
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What you need and why
+      description: The task you are trying to do, and what is missing.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source
+      description: The standard, control catalog, or vendor documentation this is based on, with a link or section number.
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I would like to open a pull request for this.

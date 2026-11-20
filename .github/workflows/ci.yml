@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  OPA_VERSION: "1.21.4"
+  CEDAR_VERSION: "4.14.0"
+
+jobs:
+  scripts:
+    name: Scripts (Python ${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # ubuntu-latest has no Python 3.9 build; 3.9 is the macOS system Python, so keep testing it
+          - { python: "3.9", os: ubuntu-24.04 }
+          - { python: "3.11", os: ubuntu-latest }
+          - { python: "3.13", os: ubuntu-latest }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: python -m pip install -r requirements-dev.txt
+      - name: Run tests (policy tests are skipped without opa and cedar)
+        run: python -m pytest -v
+
+  policies:
+    name: Policies (OPA and Cedar)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: python -m pip install -r requirements-dev.txt
+      - uses: open-policy-agent/setup-opa@v2
+        with:
+          version: ${{ env.OPA_VERSION }}
+      - name: Restore Cedar CLI
+        id: cedar-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/bin/cedar
+          key: cedar-cli-${{ runner.os }}-${{ env.CEDAR_VERSION }}
+      - name: Build Cedar CLI
+        if: steps.cedar-cache.outputs.cache-hit != 'true'
+        run: cargo install cedar-policy-cli --version "$CEDAR_VERSION" --locked
+      - run: echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+      - name: Rego formatting
+        run: opa fmt --list --fail templates/policies/*.rego examples/policies
+      - name: Rego strict check
+        run: opa check --strict templates/policies/*.rego examples/policies
+      - name: Rego unit tests
+        run: opa test -v templates/policies/*.rego examples/policies
+      - name: Full test suite, including OPA and Cedar
+        run: python -m pytest -v
+
+  plugin:
+    name: Claude Code plugin manifest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate plugin and marketplace
+        run: npx --yes @anthropic-ai/claude-code plugin validate . --strict

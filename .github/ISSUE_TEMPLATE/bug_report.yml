@@ -1,0 +1,47 @@
+name: Bug report
+description: A script fails, gives a wrong result, or a template does not work.
+labels: [bug]
+body:
+  - type: textarea
+    id: command
+    attributes:
+      label: Command you ran
+      description: The exact command, or the request you gave Claude Code.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened
+      description: Paste the full output, including any traceback.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: input
+    attributes:
+      label: Input file
+      description: The YAML, Rego, or Cedar file you used, or a minimal version of it. Remove anything confidential.
+      render: yaml
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Output of `python3 --version`, `opa version | head -1`, `cedar --version`, and the skill version or commit.
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: How you installed it
+      options:
+        - Claude Code plugin
+        - git clone into ~/.claude/skills
+        - Other
